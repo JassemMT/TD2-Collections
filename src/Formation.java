@@ -18,13 +18,33 @@ public class Formation {
         this.idFormation = idFormation;
     }
 
-    public void ajouterMatiere(Matiere matiere,Double note) {
-        this.matieres.put(matiere,note);
+
+
+    public void ajouterMatiere(Matiere matiere,Double coef) {
+        this.matieres.put(matiere,coef);
     }
 
     public void afficherMatieres() {
-        System.out.println(this.matieres);
+        for (Matiere key : this.matieres.keySet()) {
+            System.out.println(key + " -> " + this.matieres.get(key));
+        }
     }
+
+    public void supprimerMatiere(Matiere matiere) {
+        this.matieres.remove(matiere);
+    }
+
+    public double getCoefficient(Matiere matiere) {
+        if (this.matieres.containsKey(matiere)) {
+            return this.matieres.get(matiere);
+        }
+        else {
+            System.out.println("La matière n'est pas présente dans cette formation");
+
+        }
+    }
+
+
     @Override
     public String toString() {
         return "Formation{" + "idFormation='" + idFormation + '\'' + ", matieres=" + matieres + '}';
