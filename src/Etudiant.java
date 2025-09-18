@@ -25,18 +25,18 @@ public class Etudiant {
         return resultat;
     }
 
-    public void AjouterNote (Matiere m, Double note){
-        if (!resultat.containsKey(m)){
-            throw new IllegalArgumentException("Le matiere n'existe pas");
+    public void AjouterNote (Matiere m, Double note) throws NoteInvalideException, MatiereInexistanteException{
+        if (!formation.getMatieres().contains(m)) {
+            throw new MatiereInexistanteException("Le matiere n'existe pas");
         } if (note <0 || note > 20){
-            throw new IllegalArgumentException("la note est invalide");
+            throw new NoteInvalideException("la note est invalide");
         }
         resultat.get(m).add(note);
     }
 
-    public double moyenne (Matiere m){
+    public double moyenne (Matiere m) throws MatiereInexistanteException{
         if (!resultat.containsKey(m)){
-            throw new IllegalArgumentException("Le matiere n'est pas dans la formation de l'etudiant");
+            throw new MatiereInexistanteException("Le matiere n'est pas dans la formation de l'etudiant");
         }
         int len = resultat.get(m).size();
         Double somme = 0.0;
@@ -49,7 +49,7 @@ public class Etudiant {
     /**
      * Calcule la moyenne générale pondérée par les coefficients des matières
      */
-    public double moyenneGenerale() {
+    public double moyenneGenerale() throws MatiereInexistanteException{
         double sommeNotes = 0.0;
         double sommeCoef = 0.0;
 
