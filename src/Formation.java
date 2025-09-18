@@ -4,7 +4,7 @@ import java.util.Objects;
 public class Formation {
     private String idFormation;
     public HashMap<Matiere,Double> matieres;
-
+    // changer ca
     public Formation(String idFormation) {
         this.matieres = new HashMap<>();
         this.idFormation = idFormation;
@@ -12,6 +12,10 @@ public class Formation {
 
     public String getIdFormation() {
         return this.idFormation;
+    }
+
+    public HashMap<Matiere,Double> getMatieres() {
+        return this.matieres;
     }
 
     public void setIdFormation(String idFormation) {
