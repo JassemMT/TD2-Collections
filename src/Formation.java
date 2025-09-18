@@ -1,7 +1,13 @@
 import java.util.HashMap;
 
 public class Formation {
-    String idFormation;
-    HashMap<Matiere,Integer> matieres;
+    private String idFormation;
+    public HashMap<Matiere,Double> matieres;
+
+    public Formation(String idFormation) {
+        this.matieres = new HashMap<>();
+        this.idFormation = idFormation;
+
+    }
 
 }

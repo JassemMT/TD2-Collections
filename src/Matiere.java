@@ -1,3 +1,3 @@
 public class Matiere {
-    String nom;
+    private String nom;
 }
