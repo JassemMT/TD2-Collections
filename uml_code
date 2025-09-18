@@ -1,0 +1,48 @@
+@startuml
+class Identite {
+  - nip : String
+  - nom : String
+  - prenom : String
+}
+
+class Matiere {
+  - nom : String
+}
+
+class Formation {
+  - id : String
+  - matieres : HashMap<Matiere, int>  // matière -> coefficient
+  + ajouterMatiere(m : Matiere, coef : int)
+  + supprimerMatiere(m : Matiere)
+  + getCoefficient(m : Matiere) : int
+}
+
+class Etudiant {
+  - identite : Identite
+  - formation : Formation
+  - resultats : HashMap<Matiere, List<Double>>
+  + ajouterNote(m : Matiere, note : double)
+  + moyenneMatiere(m : Matiere) : double
+  + moyenneGenerale() : double
+}
+
+class Groupe {
+  - etudiants : List<Etudiant>
+  - formation : Formation
+  + ajouterEtudiant(e : Etudiant)
+  + supprimerEtudiant(e : Etudiant)
+  + moyenneMatiere(m : Matiere) : double
+  + moyenneGenerale() : double
+  + triAlpha()
+  + triAntiAlpha()
+  + triParMerite()
+}
+
+' Relations
+Etudiant --> "1" Identite
+Etudiant --> "1" Formation
+Etudiant --> "0..*" Matiere : resultats
+Formation --> "1..*" Matiere
+Groupe --> "0..*" Etudiant : etudiants
+Groupe --> "1" Formation
+@enduml
