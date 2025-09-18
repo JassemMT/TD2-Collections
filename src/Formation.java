@@ -40,7 +40,7 @@ public class Formation {
         }
         else {
             System.out.println("La matière n'est pas présente dans cette formation");
-
+            return -1;
         }
     }
 
