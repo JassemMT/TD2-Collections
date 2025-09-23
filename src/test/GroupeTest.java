@@ -1,4 +1,4 @@
-Code GroupeTest a voir dans quel repertoire mettre la classe
+//Code GroupeTest a voir dans quel repertoire mettre la classe
 
 
 

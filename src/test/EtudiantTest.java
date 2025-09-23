@@ -4,6 +4,9 @@ import exceptions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -44,7 +47,7 @@ public class EtudiantTest {
     void testAjouterNoteValide() throws NoteInvalideException, MatiereInexistanteException {
         etudiant.AjouterNote(matiereMath, 15.0);
         
-        List<Double> notesMath = etudiant.getResultat().get(matiereMath);
+        ArrayList<Double> notesMath = etudiant.getResultat().get(matiereMath);
         assertEquals(1, notesMath.size());
         assertEquals(15.0, notesMath.get(0), 0.001);
     }
