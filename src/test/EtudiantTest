@@ -19,11 +19,9 @@ public class EtudiantTest {
         matiereMath = new Matiere("Mathématiques");
         matierePhysique = new Matiere("Physique");
         
-        // Ajouter les matières à la formation avec leurs coefficients
         formation.ajouterMatiere(matiereMath, 2.0);
         formation.ajouterMatiere(matierePhysique, 1.5);
         
-        // Initialiser les listes de notes pour les matières
         etudiant.getResultat().put(matiereMath, new java.util.ArrayList<>());
         etudiant.getResultat().put(matierePhysique, new java.util.ArrayList<>());
     }
@@ -71,7 +69,6 @@ public class EtudiantTest {
     
     @Test
     void testMoyenneMatiere() throws MatiereInexistanteException {
-        // Ajouter quelques notes
         etudiant.getResultat().get(matiereMath).add(10.0);
         etudiant.getResultat().get(matiereMath).add(20.0);
         
@@ -81,7 +78,6 @@ public class EtudiantTest {
     
     @Test
     void testMoyenneMatiereSansNotes() throws MatiereInexistanteException {
-        // La liste existe mais est vide
         double moyenne = etudiant.moyenne(matiereMath);
         assertEquals(0.0, moyenne, 0.001); // Division par 0 dans la méthode actuelle
     }
@@ -97,13 +93,11 @@ public class EtudiantTest {
     
     @Test
     void testMoyenneGenerale() throws MatiereInexistanteException {
-        // Ajouter des notes aux deux matières
         etudiant.getResultat().get(matiereMath).add(10.0);
         etudiant.getResultat().get(matiereMath).add(20.0); // Moyenne: 15.0 * coef 2 = 30
         
         etudiant.getResultat().get(matierePhysique).add(10.0); // Moyenne: 10.0 * coef 1.5 = 15
         
-        // (30 + 15) / (2 + 1.5) = 45 / 3.5 = 12.857
         double moyenneGen = etudiant.moyenneGenerale();
         assertEquals(12.857, moyenneGen, 0.001);
     }
