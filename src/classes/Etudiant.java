@@ -28,8 +28,8 @@ public class Etudiant {
         return resultat;
     }
 
-    public void AjouterNote (Matiere m, Double note) throws NoteInvalideException, MatiereInexistanteException{
-        if (!formation.getMatiereNamesSet().contains(m)) {
+    public void ajouterNote (Matiere m, Double note) throws NoteInvalideException, MatiereInexistanteException{
+        if (!resultat.keySet().contains(m)) {
             throw new MatiereInexistanteException("Le matiere n'existe pas");
         } if (note <0 || note > 20){
             throw new NoteInvalideException("la note est invalide");
