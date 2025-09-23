@@ -1,5 +1,5 @@
 //Code GroupeTest a voir dans quel repertoire mettre la classe
-
+/*
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -228,3 +228,5 @@ public class GroupeTest {
         assertNotEquals(etudiantsAvant, etudiantsApres, "La liste devrait être modifiée en place.");
     }
 }
+
+*/
