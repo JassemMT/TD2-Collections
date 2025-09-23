@@ -44,4 +44,6 @@ public class Groupe {
 
         return (count == 0) ? 0 : total / count;
     }
+
+    //Nouvelle branche fct_moyennes
 }
