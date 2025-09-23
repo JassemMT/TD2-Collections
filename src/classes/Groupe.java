@@ -33,17 +33,25 @@ public class Groupe {
         return this.etudiants;
     }
 
+    //Nouvelle branche fct_moyennes
+
     public double moyenneMatiere(Matiere m) throws MatiereInexistanteException {
         double total = 0;
-        int count = 0;
 
         for (Etudiant etu : etudiants) {
             total += etu.moyenne(m);
-            count++;
         }
 
-        return (count == 0) ? 0 : total / count;
+        return (etudiants.size() == 0) ? 0 : total / etudiants.size();
     }
 
-    //Nouvelle branche fct_moyennes
+    public double moyenneGenerale() throws MatiereInexistanteException {
+        double total = 0;
+        for (Etudiant etu : etudiants) {
+            total += etu.moyenneGenerale();
+        }
+        return (etudiants.size() == 0) ? 0 : total / etudiants.size();
+    }
+
+
 }
