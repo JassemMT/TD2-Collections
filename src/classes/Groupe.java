@@ -20,7 +20,7 @@ public class Groupe {
             System.out.println("étudiant non présent dans la formation");
         }
     }
-
+//
     public void supprimerEtudiant(Etudiant etudiant) {
         etudiants.remove(etudiant);
     }
