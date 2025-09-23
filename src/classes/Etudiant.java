@@ -1,12 +1,14 @@
 package classes;
 import exceptions.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Etudiant {
     Identite identite;
     Formation formation;
-    HashMap<Matiere, List<Double>> resultat;
+    HashMap<Matiere, ArrayList<Double>> resultat;
 
     public Etudiant(Identite identite, Formation formation) {
         this.identite = identite;
@@ -22,7 +24,7 @@ public class Etudiant {
         return identite;
     }
 
-    public HashMap<Matiere, List<Double>> getResultat() {
+    public HashMap<Matiere, ArrayList<Double>> getResultat() {
         return resultat;
     }
 
