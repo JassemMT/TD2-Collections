@@ -26,7 +26,7 @@ public class Etudiant {
     }
 
     public void AjouterNote (Matiere m, Double note) throws NoteInvalideException, MatiereInexistanteException{
-        if (!formation.getMatieres().contains(m)) {
+        if (!formation.getMatiereNamesSet().contains(m)) {
             throw new MatiereInexistanteException("Le matiere n'existe pas");
         } if (note <0 || note > 20){
             throw new NoteInvalideException("la note est invalide");

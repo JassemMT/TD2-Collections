@@ -1,5 +1,7 @@
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Formation {
     private String idFormation;
@@ -14,8 +16,18 @@ public class Formation {
         return this.idFormation;
     }
 
-    public HashMap<Matiere,Double> getMatieres() {
-        return this.matieres;
+    public HashSet<String> getMatiereNamesSet() {
+        HashSet<String> matiereNames = new HashSet<>();
+        if (this.matieres != null && !this.matieres.isEmpty()) {
+            for (Matiere m : this.matieres.keySet()) {
+                matiereNames.add(m.getNom()); // Ajoute une nouvelle Matiere avec seulement le nom
+            }
+        }
+        return matiereNames;
+    }
+
+    public Set<Matiere> getMatieres() {
+        return this.matieres.keySet();
     }
 
     public void setIdFormation(String idFormation) {

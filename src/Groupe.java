@@ -30,12 +30,12 @@ public class Groupe {
         return this.etudiants;
     }
 
-    public double moyenneMatiere(Matiere m) {
+    public double moyenneMatiere(Matiere m) throws MatiereInexistanteException {
         double total = 0;
         int count = 0;
 
         for (Etudiant etu : etudiants) {
-            total += etu.moyenneMatiere(m);
+            total += etu.moyenne(m);
             count++;
         }
 
@@ -48,8 +48,10 @@ public class Groupe {
         int count = 0;
 
         for (mo : formation.getMatieres()) {
-            //key est la Matiere
-            //val est le coef
+            //key est la Matiere  bigT:   key = mo.getKey()
+            //val est le coef     bigT:   val = mo.getValue()
+
+            dcp pas besoin de mettre mo.attr juste la variable
             if(mo.val != 0){
                 total += etu.moyenneMatiere(mo.key)*mo.val;
                 total_coef += mo.val
@@ -59,5 +61,16 @@ public class Groupe {
 
         return (count == 0) ? 0 : total / count;
     }
+    // Méthode pour trier les étudiants A-Z
+    public void triAlpha() {
+        etudiants.sort(Comparator.comparing(Etudiant::getNom));
+    }
+
+    // Méthode pour trier les étudiants Z-A
+    public void triAntiAlpha() {
+        etudiants.sort(Comparator.comparing(Etudiant::getNom, Comparator.reverseOrder()));
+    }
+
+
 */
 }
