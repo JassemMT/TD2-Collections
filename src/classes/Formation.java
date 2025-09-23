@@ -1,3 +1,6 @@
+package classes;
+import exceptions.*;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Objects;
@@ -20,7 +23,7 @@ public class Formation {
         HashSet<String> matiereNames = new HashSet<>();
         if (this.matieres != null && !this.matieres.isEmpty()) {
             for (Matiere m : this.matieres.keySet()) {
-                matiereNames.add(m.getNom()); // Ajoute une nouvelle Matiere avec seulement le nom
+                matiereNames.add(m.getNom()); // Ajoute une nouvelle classes.Matiere avec seulement le nom
             }
         }
         return matiereNames;
@@ -63,7 +66,7 @@ public class Formation {
 
     @Override
     public String toString() {
-        return "Formation{" + "idFormation='" + idFormation + '\'' + ", matieres=" + matieres + '}';
+        return "classes.Formation{" + "idFormation='" + idFormation + '\'' + ", matieres=" + matieres + '}';
     }
 
     @Override

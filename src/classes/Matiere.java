@@ -1,3 +1,5 @@
+package classes;
+import exceptions.*;
 import java.util.Objects;
 
 public class Matiere {
@@ -28,7 +30,7 @@ public class Matiere {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Matiere matiere)) return false;
+        if (!(o instanceof classes.Matiere matiere)) return false;
         return Double.compare(coeff, matiere.coeff) == 0 && Objects.equals(nom, matiere.nom);
     }
 
@@ -39,7 +41,7 @@ public class Matiere {
 
         @Override
     public String toString() {
-        return "Matiere{" +
+        return "classes.Matiere{" +
                 "nom='" + nom + '\'' +
                 ", coeff=" + coeff +
                 '}';
@@ -61,7 +63,7 @@ public class Matiere {
 
     @Override
     public String toString() {
-        return "Matiere{" +
+        return "classes.Matiere{" +
                 "nom='" + nom + '\'' +
                 '}';
     }

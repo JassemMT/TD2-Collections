@@ -1,37 +1,37 @@
 @startuml
-class Identite {
+class classes.Identite {
   - nip : String
   - nom : String
   - prenom : String
 }
 
-class Matiere {
+class classes.Matiere {
   - nom : String
 }
 
-class Formation {
+class classes.Formation {
   - id : String
-  - matieres : HashMap<Matiere, int>  // matière -> coefficient
-  + ajouterMatiere(m : Matiere, coef : int)
-  + supprimerMatiere(m : Matiere)
-  + getCoefficient(m : Matiere) : int
+  - matieres : HashMap<classes.Matiere, int>  // matière -> coefficient
+  + ajouterMatiere(m : classes.Matiere, coef : int)
+  + supprimerMatiere(m : classes.Matiere)
+  + getCoefficient(m : classes.Matiere) : int
 }
 
 class Etudiant {
-  - identite : Identite
-  - formation : Formation
-  - resultats : HashMap<Matiere, List<Double>>
-  + ajouterNote(m : Matiere, note : double)
-  + moyenneMatiere(m : Matiere) : double
+  - identite : classes.Identite
+  - formation : classes.Formation
+  - resultats : HashMap<classes.Matiere, List<Double>>
+  + ajouterNote(m : classes.Matiere, note : double)
+  + moyenneMatiere(m : classes.Matiere) : double
   + moyenneGenerale() : double
 }
 
-class Groupe {
+class classes.Groupe {
   - etudiants : List<Etudiant>
-  - formation : Formation
+  - formation : classes.Formation
   + ajouterEtudiant(e : Etudiant)
   + supprimerEtudiant(e : Etudiant)
-  + moyenneMatiere(m : Matiere) : double
+  + moyenneMatiere(m : classes.Matiere) : double
   + moyenneGenerale() : double
   + triAlpha()
   + triAntiAlpha()
@@ -39,10 +39,10 @@ class Groupe {
 }
 
 ' Relations
-Etudiant --> "1" Identite
-Etudiant --> "1" Formation
-Etudiant --> "0..*" Matiere : resultats
-Formation --> "1..*" Matiere
-Groupe --> "0..*" Etudiant : etudiants
-Groupe --> "1" Formation
+Etudiant --> "1" classes.Identite
+Etudiant --> "1" classes.Formation
+Etudiant --> "0..*" classes.Matiere : resultats
+classes.Formation --> "1..*" classes.Matiere
+classes.Groupe --> "0..*" Etudiant : etudiants
+classes.Groupe --> "1" classes.Formation
 @enduml

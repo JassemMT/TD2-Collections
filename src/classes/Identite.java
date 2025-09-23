@@ -1,3 +1,6 @@
+package classes;
+import exceptions.*;
+
 import java.util.Objects;
 
 public class Identite {
@@ -48,7 +51,7 @@ public class Identite {
 
     @Override
     public String toString() {
-        return "Identite{" +
+        return "classes.Identite{" +
                 "nip='" + nip + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +

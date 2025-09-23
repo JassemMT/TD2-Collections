@@ -10,8 +10,8 @@ import java.util.List;
 
 public class GroupeTest {
 
-    private Groupe groupe;
-    private Formation formation;
+    private classes.Groupe groupe;
+    private classes.Formation formation;
     private Etudiant etudiantValide;
     private Etudiant etudiantInvalide;
 
@@ -19,17 +19,17 @@ public class GroupeTest {
     @BeforeEach
     public void setUp() {
         // Création d'une formation fictive
-        formation = new Formation(); // Supposons un constructeur par défaut pour Formation
+        formation = new classes.Formation(); // Supposons un constructeur par défaut pour classes.Formation
 
         // Création d'un étudiant valide (même formation)
-        etudiantValide = new Etudiant(formation); // Supposons un constructeur prenant une Formation
+        etudiantValide = new Etudiant(formation); // Supposons un constructeur prenant une classes.Formation
 
         // Création d'un étudiant invalide (formation différente)
-        Formation autreFormation = new Formation(); // Nouvelle instance de formation
+        classes.Formation autreFormation = new classes.Formation(); // Nouvelle instance de formation
         etudiantInvalide = new Etudiant(autreFormation);
 
         // Initialisation du groupe avec la formation
-        groupe = new Groupe(formation);
+        groupe = new classes.Groupe(formation);
     }
 
     // Test de l'ajout d'un étudiant valide
@@ -83,22 +83,22 @@ import java.util.List;
 
 public class GroupeTest {
 
-    private Groupe groupe;
-    private Formation formation;
-    private Matiere matiere1;
-    private Matiere matiere2;
+    private classes.Groupe groupe;
+    private classes.Formation formation;
+    private classes.Matiere matiere1;
+    private classes.Matiere matiere2;
     private Etudiant etudiant1;
     private Etudiant etudiant2;
 
     @BeforeEach
     public void setUp() {
         // Initialisation de la formation
-        formation = new Formation();
+        formation = new classes.Formation();
         formation.setMatieres(new HashMap<>()); // Supposons une méthode setMatieres
 
         // Initialisation des matières
-        matiere1 = new Matiere("Mathématiques", 3.0);
-        matiere2 = new Matiere("Physique", 2.0);
+        matiere1 = new classes.Matiere("Mathématiques", 3.0);
+        matiere2 = new classes.Matiere("Physique", 2.0);
         formation.getMatieres().put(matiere1, 3.0); // Ajout avec coefficient
         formation.getMatieres().put(matiere2, 2.0);
 
@@ -113,14 +113,14 @@ public class GroupeTest {
         etudiant2.getNotes().put(matiere2, 14.0); // Note pour Physique
 
         // Initialisation du groupe
-        groupe = new Groupe(formation);
+        groupe = new classes.Groupe(formation);
         groupe.ajouterEtudiant(etudiant1);
         groupe.ajouterEtudiant(etudiant2);
     }
 
     // Test de moyenneMatiere
     @Test
-    public void testMoyenneMatiere() throws MatiereInexistanteException {
+    public void testMoyenneMatiere() throws exceptions.MatiereInexistanteException {
         // Test pour Mathématiques
         double moyenneMath = groupe.moyenneMatiere(matiere1);
         assertEquals(16.5, moyenneMath, 0.01, "La moyenne de Mathématiques devrait être 16.5 ( (15 + 18) / 2 )");
@@ -130,15 +130,15 @@ public class GroupeTest {
         assertEquals(13.0, moyennePhys, 0.01, "La moyenne de Physique devrait être 13.0 ( (12 + 14) / 2 )");
 
         // Test avec une matière inexistante
-        Matiere matiereInexistante = new Matiere("Chimie", 1.0);
-        assertThrows(MatiereInexistanteException.class, () -> groupe.moyenneMatiere(matiereInexistante),
-                "Devrait lancer une MatiereInexistanteException pour une matière inexistante");
+        classes.Matiere matiereInexistante = new classes.Matiere("Chimie", 1.0);
+        assertThrows(exceptions.MatiereInexistanteException.class, () -> groupe.moyenneMatiere(matiereInexistante),
+                "Devrait lancer une exceptions.MatiereInexistanteException pour une matière inexistante");
     }
 
     // Test de moyenneGenerale (corrigée et partiellement testée)
     @Test
     public void testMoyenneGenerale() {
-        // Corriger et implémenter la méthode moyenneGenerale dans Groupe
+        // Corriger et implémenter la méthode moyenneGenerale dans classes.Groupe
         groupe.moyenneGenerale(); // Cela dépend de l'implémentation corrigée ci-dessous
 
         // Calcul manuel attendu : ( (15 * 3) + (12 * 2) + (18 * 3) + (14 * 2) ) / (3 + 2)
@@ -165,8 +165,8 @@ import java.util.List;
 
 public class GroupeTest {
 
-    private Groupe groupe;
-    private Formation formation;
+    private classes.Groupe groupe;
+    private classes.Formation formation;
     private Etudiant etudiant1;
     private Etudiant etudiant2;
     private Etudiant etudiant3;
@@ -174,7 +174,7 @@ public class GroupeTest {
     @BeforeEach
     public void setUp() {
         // Initialisation de la formation
-        formation = new Formation();
+        formation = new classes.Formation();
 
         // Initialisation des étudiants avec des noms différents
         etudiant1 = new Etudiant("Zoe", formation);
@@ -182,7 +182,7 @@ public class GroupeTest {
         etudiant3 = new Etudiant("Bob", formation);
 
         // Initialisation du groupe
-        groupe = new Groupe(formation);
+        groupe = new classes.Groupe(formation);
         groupe.ajouterEtudiant(etudiant1);
         groupe.ajouterEtudiant(etudiant2);
         groupe.ajouterEtudiant(etudiant3);
