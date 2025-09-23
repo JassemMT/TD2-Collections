@@ -42,6 +42,9 @@ public class Etudiant {
             throw new MatiereInexistanteException("Le matiere n'est pas dans la formation de l'etudiant");
         }
         int len = resultat.get(m).size();
+        if (len == 0){
+            return 0.0;
+        }
         Double somme = 0.0;
         for(int i=0; i<len; i++){
            somme+= resultat.get(m).get(i);
