@@ -1,0 +1,130 @@
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+class EtudiantTest {
+    
+    private Etudiant etudiant;
+    private Formation formation;
+    private Identite identite;
+    private Matiere matiereMath;
+    private Matiere matierePhysique;
+    
+    @BeforeEach
+    void setUp() {
+        identite = new Identite("Dupont");
+        formation = new Formation();
+        matiereMath = new Matiere("Mathématiques", 2.0);
+        matierePhysique = new Matiere("Physique", 1.5);
+        
+        formation.ajouterMatiere(matiereMath);
+        formation.ajouterMatiere(matierePhysique);
+        
+        etudiant = new Etudiant(identite, formation);
+                etudiant.getResultat().put(matiereMath, new java.util.ArrayList<>());
+        etudiant.getResultat().put(matierePhysique, new java.util.ArrayList<>());
+    }
+    
+    @Test
+    void testConstructeur() {
+        assertNotNull(etudiant);
+        assertEquals(identite, etudiant.getIdentite());
+        assertEquals(formation, etudiant.getFormation());
+        assertNotNull(etudiant.getResultat());
+        assertTrue(etudiant.getResultat().isEmpty());
+    }
+    
+    @Test
+    void testAjouterNoteValide() throws Exception {
+        etudiant.AjouterNote(matiereMath, 15.0);
+        
+        List<Double> notesMath = etudiant.getResultat().get(matiereMath);
+        assertEquals(1, notesMath.size());
+        assertEquals(15.0, notesMath.get(0));
+    }
+    
+    @Test
+    void testAjouterNoteInvalideNegatif() {
+        assertThrows(NoteInvalideException.class, () -> {
+            etudiant.AjouterNote(matiereMath, -5.0);
+        });
+    }
+    
+    @Test
+    void testAjouterNoteInvalideSuperieur20() {
+        assertThrows(NoteInvalideException.class, () -> {
+            etudiant.AjouterNote(matiereMath, 25.0);
+        });
+    }
+    
+    @Test
+    void testAjouterNoteMatiereInexistante() {
+        Matiere matiereInconnue = new Matiere("Chimie", 1.0);
+        
+        assertThrows(MatiereInexistanteException.class, () -> {
+            etudiant.AjouterNote(matiereInconnue, 15.0);
+        });
+    }
+    
+    @Test
+    void testMoyenneMatiere() throws Exception {
+        etudiant.getResultat().get(matiereMath).add(10.0);
+        etudiant.getResultat().get(matiereMath).add(20.0);
+        
+        double moyenne = etudiant.moyenne(matiereMath);
+        assertEquals(15.0, moyenne, 0.001);
+    }
+    
+    @Test
+    void testMoyenneMatiereSansNotes() throws Exception {
+        double moyenne = etudiant.moyenne(matiereMath);
+        assertEquals(0.0, moyenne, 0.001);
+    }
+    
+    @Test
+    void testMoyenneMatiereInexistante() {
+        Matiere matiereInconnue = new Matiere("Chimie", 1.0);
+        assertThrows(MatiereInexistanteException.class, () -> {
+            etudiant.moyenne(matiereInconnue);
+        });
+    }
+    
+    @Test
+    void testMoyenneGenerale() throws Exception {
+        etudiant.getResultat().get(matiereMath).add(10.0);
+        etudiant.getResultat().get(matiereMath).add(20.0); // moyenne math = 15.0
+        
+        etudiant.getResultat().get(matierePhysique).add(12.0);
+        etudiant.getResultat().get(matierePhysique).add(18.0); // moyenne physique = 15.0
+        
+        double moyenneGen = etudiant.moyenneGenerale();
+        assertEquals(15.0, moyenneGen, 0.001);
+    }
+    
+    @Test
+    void testMoyenneGeneraleAvecCoefficients() throws Exception {
+        etudiant.getResultat().get(matiereMath).add(10.0);
+        etudiant.getResultat().get(matiereMath).add(20.0);
+        
+        etudiant.getResultat().get(matierePhysique).add(10.0);
+        etudiant.getResultat().get(matierePhysique).add(10.0);
+        
+        double moyenneGen = etudiant.moyenneGenerale();
+        assertEquals(12.857, moyenneGen, 0.001);
+    }
+    
+    @Test
+    void testMoyenneGeneraleSansNotes() throws Exception {
+        double moyenneGen = etudiant.moyenneGenerale();
+        assertEquals(0.0, moyenneGen, 0.001);
+    }
+    
+    @Test
+    void testMoyenneGeneraleUneMatiereSansNotes() throws Exception {
+        etudiant.getResultat().get(matiereMath).add(15.0);
+        etudiant.getResultat().get(matiereMath).add(15.0);
+        
+        double moyenneGen = etudiant.moyenneGenerale();
+        assertEquals(15.0, moyenneGen, 0.001);
+    }
+}
