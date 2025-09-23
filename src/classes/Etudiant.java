@@ -56,7 +56,12 @@ public class Etudiant {
 
         for (Matiere m : resultat.keySet()) { // seulement les matières où l'étudiant a eu une note
             double moy = moyenne(m);
-            Double coef = m.getCoeff();
+            double coef = formation.getCoefficient(m);
+
+            if (coef == -1) {
+                throw new MatiereInexistanteException("La matière " + m.getNom() + " n'existe pas dans la formation");
+            }
+
             sommeNotes += moy * coef;
             sommeCoef += coef;
         }

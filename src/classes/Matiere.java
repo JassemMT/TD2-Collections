@@ -6,12 +6,9 @@ public class Matiere {
     private String nom;
     private double coeff;
 
-    public Matiere(String nom,
-                   //double coeff
-                  ) {
+    public Matiere(String nom) {
         this.nom = nom;
-        //this.coeff = coeff;
-    }
+            }
     public String getNom() {
         return this.nom;
     }
