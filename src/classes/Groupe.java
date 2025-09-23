@@ -42,7 +42,7 @@ public class Groupe {
             total += etu.moyenne(m);
         }
 
-        return (etudiants.size() == 0) ? 0 : total / etudiants.size();
+        return (etudiants.isEmpty()) ? 0 : total / etudiants.size();
     }
 
     public double moyenneGenerale() throws MatiereInexistanteException {
@@ -50,7 +50,7 @@ public class Groupe {
         for (Etudiant etu : etudiants) {
             total += etu.moyenneGenerale();
         }
-        return (etudiants.size() == 0) ? 0 : total / etudiants.size();
+        return (etudiants.isEmpty()) ? 0 : total / etudiants.size();
     }
 
 
