@@ -133,7 +133,7 @@ public class GroupeTest {
         // moy etu1 reseau = 11
         // moy etu algo = 9
         // Moyenne du groupe = 9.75
-        assertEquals(10.66, groupe.moyenneMatiere(web));
+        assertEquals(10.66, groupe.moyenneMatiere(web),0.01);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class GroupeTest {
         groupe.ajouterEtudiant(etu2);
 
         // Aucun étudiant n'a de note → moyenne = 0
-        assertEquals(0.0, groupe.moyenneMatiere(web));
+        assertEquals(0.0, groupe.moyenneMatiere(web),0.01);
     }
 
     void testMoyenneGeneral() throws MatiereInexistanteException {
@@ -150,7 +150,7 @@ public class GroupeTest {
         groupe.ajouterEtudiant(etu2);
         groupe.ajouterEtudiant(etu3);
 
-        assertEquals(10.66, groupe.moyenneMatiere(web));
+        assertEquals(10.66, groupe.moyenneMatiere(web),0.01);
 
     }
 }
