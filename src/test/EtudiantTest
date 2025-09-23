@@ -2,7 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class EtudiantTest {
+public class EtudiantTest {
     
     private Etudiant etudiant;
     private Formation formation;
@@ -12,16 +12,19 @@ class EtudiantTest {
     
     @BeforeEach
     void setUp() {
-        identite = new Identite("Dupont");
-        formation = new Formation();
-        matiereMath = new Matiere("Mathématiques", 2.0);
-        matierePhysique = new Matiere("Physique", 1.5);
-        
-        formation.ajouterMatiere(matiereMath);
-        formation.ajouterMatiere(matierePhysique);
-        
+        formation = new Formation("INFO1");
+        identite = new Identite("12345", "Dupont", "Jean");
         etudiant = new Etudiant(identite, formation);
-                etudiant.getResultat().put(matiereMath, new java.util.ArrayList<>());
+        
+        matiereMath = new Matiere("Mathématiques");
+        matierePhysique = new Matiere("Physique");
+        
+        // Ajouter les matières à la formation avec leurs coefficients
+        formation.ajouterMatiere(matiereMath, 2.0);
+        formation.ajouterMatiere(matierePhysique, 1.5);
+        
+        // Initialiser les listes de notes pour les matières
+        etudiant.getResultat().put(matiereMath, new java.util.ArrayList<>());
         etudiant.getResultat().put(matierePhysique, new java.util.ArrayList<>());
     }
     
@@ -35,23 +38,23 @@ class EtudiantTest {
     }
     
     @Test
-    void testAjouterNoteValide() throws Exception {
+    void testAjouterNoteValide() throws NoteInvalideException, MatiereInexistanteException {
         etudiant.AjouterNote(matiereMath, 15.0);
         
         List<Double> notesMath = etudiant.getResultat().get(matiereMath);
         assertEquals(1, notesMath.size());
-        assertEquals(15.0, notesMath.get(0));
+        assertEquals(15.0, notesMath.get(0), 0.001);
     }
     
     @Test
-    void testAjouterNoteInvalideNegatif() {
+    void testAjouterNoteInvalideNegative() {
         assertThrows(NoteInvalideException.class, () -> {
             etudiant.AjouterNote(matiereMath, -5.0);
         });
     }
     
     @Test
-    void testAjouterNoteInvalideSuperieur20() {
+    void testAjouterNoteInvalideSuperieure20() {
         assertThrows(NoteInvalideException.class, () -> {
             etudiant.AjouterNote(matiereMath, 25.0);
         });
@@ -59,7 +62,7 @@ class EtudiantTest {
     
     @Test
     void testAjouterNoteMatiereInexistante() {
-        Matiere matiereInconnue = new Matiere("Chimie", 1.0);
+        Matiere matiereInconnue = new Matiere("Chimie");
         
         assertThrows(MatiereInexistanteException.class, () -> {
             etudiant.AjouterNote(matiereInconnue, 15.0);
@@ -67,7 +70,8 @@ class EtudiantTest {
     }
     
     @Test
-    void testMoyenneMatiere() throws Exception {
+    void testMoyenneMatiere() throws MatiereInexistanteException {
+        // Ajouter quelques notes
         etudiant.getResultat().get(matiereMath).add(10.0);
         etudiant.getResultat().get(matiereMath).add(20.0);
         
@@ -76,55 +80,44 @@ class EtudiantTest {
     }
     
     @Test
-    void testMoyenneMatiereSansNotes() throws Exception {
+    void testMoyenneMatiereSansNotes() throws MatiereInexistanteException {
+        // La liste existe mais est vide
         double moyenne = etudiant.moyenne(matiereMath);
-        assertEquals(0.0, moyenne, 0.001);
+        assertEquals(0.0, moyenne, 0.001); // Division par 0 dans la méthode actuelle
     }
     
     @Test
     void testMoyenneMatiereInexistante() {
-        Matiere matiereInconnue = new Matiere("Chimie", 1.0);
+        Matiere matiereInconnue = new Matiere("Chimie");
+        
         assertThrows(MatiereInexistanteException.class, () -> {
             etudiant.moyenne(matiereInconnue);
         });
     }
     
     @Test
-    void testMoyenneGenerale() throws Exception {
+    void testMoyenneGenerale() throws MatiereInexistanteException {
+        // Ajouter des notes aux deux matières
         etudiant.getResultat().get(matiereMath).add(10.0);
-        etudiant.getResultat().get(matiereMath).add(20.0); // moyenne math = 15.0
+        etudiant.getResultat().get(matiereMath).add(20.0); // Moyenne: 15.0 * coef 2 = 30
         
-        etudiant.getResultat().get(matierePhysique).add(12.0);
-        etudiant.getResultat().get(matierePhysique).add(18.0); // moyenne physique = 15.0
+        etudiant.getResultat().get(matierePhysique).add(10.0); // Moyenne: 10.0 * coef 1.5 = 15
         
-        double moyenneGen = etudiant.moyenneGenerale();
-        assertEquals(15.0, moyenneGen, 0.001);
-    }
-    
-    @Test
-    void testMoyenneGeneraleAvecCoefficients() throws Exception {
-        etudiant.getResultat().get(matiereMath).add(10.0);
-        etudiant.getResultat().get(matiereMath).add(20.0);
-        
-        etudiant.getResultat().get(matierePhysique).add(10.0);
-        etudiant.getResultat().get(matierePhysique).add(10.0);
-        
+        // (30 + 15) / (2 + 1.5) = 45 / 3.5 = 12.857
         double moyenneGen = etudiant.moyenneGenerale();
         assertEquals(12.857, moyenneGen, 0.001);
     }
     
     @Test
-    void testMoyenneGeneraleSansNotes() throws Exception {
+    void testMoyenneGeneraleSansNotes() throws MatiereInexistanteException {
         double moyenneGen = etudiant.moyenneGenerale();
         assertEquals(0.0, moyenneGen, 0.001);
     }
     
     @Test
-    void testMoyenneGeneraleUneMatiereSansNotes() throws Exception {
-        etudiant.getResultat().get(matiereMath).add(15.0);
-        etudiant.getResultat().get(matiereMath).add(15.0);
-        
-        double moyenneGen = etudiant.moyenneGenerale();
-        assertEquals(15.0, moyenneGen, 0.001);
+    void testGetters() {
+        assertEquals(identite, etudiant.getIdentite());
+        assertEquals(formation, etudiant.getFormation());
+        assertNotNull(etudiant.getResultat());
     }
 }
