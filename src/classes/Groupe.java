@@ -2,6 +2,7 @@ package classes;
 import exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Groupe {
@@ -37,9 +38,11 @@ public class Groupe {
 
     public double moyenneMatiere(Matiere m) throws MatiereInexistanteException {
         double total = 0;
+        int count = 0;
 
         for (Etudiant etu : etudiants) {
             total += etu.moyenne(m);
+            count++;
         }
 
         return (etudiants.isEmpty()) ? 0 : total / etudiants.size();
@@ -53,5 +56,13 @@ public class Groupe {
         return (etudiants.isEmpty()) ? 0 : total / etudiants.size();
     }
 
+    /** Tri alphabétique A vers Z */
+    public void triAlpha() {
+        Collections.sort(etudiants, new ComparateurAlpha());
+    }
 
+    /** Tri alphabétique inverse Z bers A */
+    public void triAntiAlpha() {
+        Collections.sort(etudiants, new ComparateurAntiAlpha());
+    }
 }
