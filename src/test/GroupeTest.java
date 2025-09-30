@@ -239,7 +239,46 @@ public class GroupeTest {
                 "Un seul étudiant reste en place après tri inverse");
     }
 
-    /*@Test
+    @Test
+    void testGetFormation() {
+        assertEquals(formation, groupe.getFormation(),
+                "Le getter doit retourner la formation associée");
+    }
+
+    @Test
+    void testGetEtudiants() {
+        assertTrue(groupe.getEtudiants().isEmpty(),
+                "Un groupe nouvellement créé doit avoir une liste d'étudiants vide");
+        groupe.ajouterEtudiant(etu1);
+        assertEquals(1, groupe.getEtudiants().size(),
+                "La liste doit refléter les étudiants ajoutés");
+    }
+
+    @Test
+    void testMoyenneGeneraleSansEtudiant() throws MatiereInexistanteException {
+        assertEquals(0.0, groupe.moyenneGenerale(),
+                "Sans étudiants, la moyenne générale doit être 0");
+    }
+
+    @Test
+    void testMoyenneGeneraleAvecEtudiants() throws Exception {
+        etu1.ajouterNote(web, 10.0);
+        etu1.ajouterNote(reseau, 12.0);
+        etu1.ajouterNote(algo, 14.0);
+
+        etu2.ajouterNote(web, 8.0);
+        etu2.ajouterNote(reseau, 9.0);
+        etu2.ajouterNote(algo, 10.0);
+
+        groupe.ajouterEtudiant(etu1);
+        groupe.ajouterEtudiant(etu2);
+
+        double moyenneAttendue = (etu1.moyenneGenerale() + etu2.moyenneGenerale()) / 2.0;
+        assertEquals(moyenneAttendue, groupe.moyenneGenerale(), 0.01);
+    }
+
+/*
+    @Test
     public void testListeVide() {
         List<Etudiant> result = groupe.triMerite();
         assertTrue(result.isEmpty(), "La liste vide doit rester vide");
@@ -294,5 +333,7 @@ public class GroupeTest {
         assertEquals(2, result.size(), "Doit contenir les 2 étudiants");
         System.out.println("Résultat avec exception générale : " + result);
 
-    }*/
+    }
+
+ */
 }
