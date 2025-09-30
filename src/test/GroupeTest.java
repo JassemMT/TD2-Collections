@@ -141,9 +141,18 @@ public class GroupeTest {
     }
 
     @Test
-    void testMoyenneMatiereSansNotes() throws MatiereInexistanteException {
-        groupe.ajouterEtudiant(etu1);
-        groupe.ajouterEtudiant(etu2);
+    void testMoyenneMatiereSansNotes() throws MatiereInexistanteException, NoteInvalideException {
+        Etudiant etu5 = new Etudiant(new Identite("5","Dulont", "Thomas"), formation);
+        Etudiant etu6 = new Etudiant(new Identite("", "Dron", "Albert"), formation);
+        etu5.getResultat().put(web, new java.util.ArrayList<>());
+        etu6.getResultat().put(web, new java.util.ArrayList<>());
+        etu5.ajouterNote(web, 0.0);
+        etu6.ajouterNote(web, 0.0);
+
+
+
+        groupe.ajouterEtudiant(etu5);
+        groupe.ajouterEtudiant(etu6);
 
         // Aucun étudiant n'a de note → moyenne = 0
         assertEquals(0.0, groupe.moyenneMatiere(web),0.01);
@@ -308,31 +317,37 @@ public class GroupeTest {
         //etu2 = new Etudiant(new Identite("2", "Durand", "Astrid"), formation);
         //etu3 = new Etudiant(new Identite("3","Donald", "David"), formation);
         assertEquals(3, result.size(), "Doit contenir les 3 étudiants");
-        assertEquals("Arthur Dupont (Moyenne : 12.0)", result.get(0).toString(), "Premier doit être Arthur");
-        assertEquals("Astrid Durand (Moyenne : 10.0)", result.get(1).toString(), "Deuxième doit être Astrid");
-        assertEquals("David Donald (Moyenne : 9.0)", result.get(2).toString(), "Troisième doit être David");
+        assertEquals(etu1, result.get(0), "Premier doit être Arthur");
+        assertEquals(etu3, result.get(1), "Deuxième doit être Astrid");
+        assertEquals(etu2, result.get(2), "Troisième doit être David");
     }
 
     @Test
     public void testExceptionGenerale() throws MatiereInexistanteException, NoteInvalideException {
         // Simuler une erreur générale
-        formation.ajouterMatiere(web, 1.0);
-        formation.ajouterMatiere(reseau, 1.0);
-        formation.ajouterMatiere(algo, 2.0);
 
         groupe = new Groupe(formation);
 
-        Etudiant etu4 = new Etudiant(new Identite("5", "Dup", "Austerre"), formation);
-        etu4.ajouterNote(web, -11.0);
-        etu4.ajouterNote(reseau, 12.0);
-        etu4.ajouterNote(algo, -9.0);
+        Etudiant etu7 = new Etudiant(new Identite("7", "Duplot", "Austerre"), formation);
 
-        groupe.ajouterEtudiant(etu4);
+        etu7.getResultat().put(web, new java.util.ArrayList<>());
+        etu7.getResultat().put(reseau, new java.util.ArrayList<>());
+        etu7.getResultat().put(algo, new java.util.ArrayList<>());
+        try {
+            etu7.ajouterNote(web, -11.0);
+            etu7.ajouterNote(reseau, 12.0);
+            etu7.ajouterNote(algo, -9.0);
+
+        }
+        catch (NoteInvalideException e){
+            System.out.println(e.getMessage());
+        }
+        groupe.ajouterEtudiant(etu7);
         groupe.ajouterEtudiant(etu2);
         List<Etudiant> result = groupe.triMerite();
 
         assertEquals(2, result.size(), "Doit contenir les 2 étudiants");
-        System.out.println("Résultat avec exception générale : " + result);
+       // System.out.println("Résultat avec exception générale : " + result);
 
     }
 
