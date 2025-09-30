@@ -21,6 +21,7 @@ public class GroupeTest {
     private Etudiant etu1;
     private Etudiant etu2;
     private Etudiant etu3;
+    private Etudiant etu4;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -38,6 +39,7 @@ public class GroupeTest {
         etu1 = new Etudiant(new Identite("1","Dupont", "Arthur"), formation);
         etu2 = new Etudiant(new Identite("2", "Durand", "Astrid"), formation);
         etu3 = new Etudiant(new Identite("3", "Bernard", "Lucie"), formation);
+        etu4 = new Etudiant(new Identite("4", "dupont", "Zoé"), formation);
 
         // initialiser la map de résultats avec des listes vides
         etu1.getResultat().put(math, new java.util.ArrayList<>());
@@ -100,34 +102,86 @@ public class GroupeTest {
         assertEquals(0.0, groupe.moyenneMatiere(math));
     }
     @Test
-    void testTriAlpha() {
+    void testTriAlpha_OrdreBasique() {
         groupe.ajouterEtudiant(etu1); // Dupont
         groupe.ajouterEtudiant(etu2); // Durand
         groupe.ajouterEtudiant(etu3); // Bernard
 
         groupe.triAlpha();
 
-        assertEquals("Bernard", groupe.getEtudiants().get(0).getIdentite().getNom(),
-                "Bernard doit venir en premier (ordre A-Z)");
-        assertEquals("Dupont", groupe.getEtudiants().get(1).getIdentite().getNom(),
-                "Dupont doit venir ensuite");
-        assertEquals("Durand", groupe.getEtudiants().get(2).getIdentite().getNom(),
-                "Durand doit venir en dernier");
+        assertEquals("Bernard", groupe.getEtudiants().get(0).getIdentite().getNom());
+        assertEquals("Dupont",  groupe.getEtudiants().get(1).getIdentite().getNom());
+        assertEquals("Durand",  groupe.getEtudiants().get(2).getIdentite().getNom());
+    }
+
+
+
+    @Test
+    void testTriAlpha_NomsIdentiquesDifferentsPrenoms() {
+        Etudiant e5 = new Etudiant(new Identite("5", "Dupont", "Alice"), formation);
+        Etudiant e6 = new Etudiant(new Identite("6", "Dupont", "Zacharie"), formation);
+
+        groupe.ajouterEtudiant(e5);
+        groupe.ajouterEtudiant(e6);
+
+        groupe.triAlpha();
+
+        // Les deux ont le même nom → tri stable (par ordre d'insertion)
+        assertEquals("Alice", groupe.getEtudiants().get(0).getIdentite().getPrenom());
+        assertEquals("Zacharie", groupe.getEtudiants().get(1).getIdentite().getPrenom());
     }
 
     @Test
-    void testTriAntiAlpha() {
+    void testTriAlpha_GroupeVide() {
+        groupe.triAlpha();
+        assertTrue(groupe.getEtudiants().isEmpty(), "Un groupe vide reste vide après tri");
+    }
+
+    @Test
+    void testTriAlpha_UnSeulEtudiant() {
+        groupe.ajouterEtudiant(etu1);
+        groupe.triAlpha();
+        assertEquals("Dupont", groupe.getEtudiants().get(0).getIdentite().getNom(),
+                "Un seul étudiant ne change pas de position");
+    }
+
+
+    @Test
+    void testTriAntiAlpha_OrdreBasique() {
         groupe.ajouterEtudiant(etu1); // Dupont
         groupe.ajouterEtudiant(etu2); // Durand
         groupe.ajouterEtudiant(etu3); // Bernard
 
         groupe.triAntiAlpha();
 
+        assertEquals("Durand", groupe.getEtudiants().get(0).getIdentite().getNom());
+        assertEquals("Dupont", groupe.getEtudiants().get(1).getIdentite().getNom());
+        assertEquals("Bernard", groupe.getEtudiants().get(2).getIdentite().getNom());
+    }
+
+
+
+    @Test
+    void testTriAntiAlpha_NomsIdentiquesDifferentsPrenoms() {
+        Etudiant e5 = new Etudiant(new Identite("5", "Dupont", "Alice"), formation);
+        Etudiant e6 = new Etudiant(new Identite("6", "Dupont", "Zacharie"), formation);
+
+        groupe.ajouterEtudiant(e5);
+        groupe.ajouterEtudiant(e6);
+
+        groupe.triAntiAlpha();
+
+        // Même nom, tri stable, l'ordre reste celui d'insertion
+        assertEquals("Alice", groupe.getEtudiants().get(0).getIdentite().getPrenom());
+        assertEquals("Zacharie", groupe.getEtudiants().get(1).getIdentite().getPrenom());
+    }
+
+    @Test
+    void testTriAntiAlpha_UnSeulEtudiant() {
+        groupe.ajouterEtudiant(etu2);
+        groupe.triAntiAlpha();
+
         assertEquals("Durand", groupe.getEtudiants().get(0).getIdentite().getNom(),
-                "Durand doit venir en premier (ordre Z-A)");
-        assertEquals("Dupont", groupe.getEtudiants().get(1).getIdentite().getNom(),
-                "Dupont doit venir ensuite");
-        assertEquals("Bernard", groupe.getEtudiants().get(2).getIdentite().getNom(),
-                "Bernard doit venir en dernier");
+                "Un seul étudiant reste en place après tri inverse");
     }
 }
