@@ -1,7 +1,9 @@
 package classes;
 import exceptions.*;
 
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Groupe {
@@ -43,5 +45,14 @@ public class Groupe {
         }
 
         return (count == 0) ? 0 : total / count;
+    }
+    /** Tri alphabétique A vers Z */
+    public void triAlpha() {
+        Collections.sort(etudiants, new ComparateurAlpha());
+    }
+
+    /** Tri alphabétique inverse Z bers A */
+    public void triAntiAlpha() {
+        Collections.sort(etudiants, new ComparateurAntiAlpha());
     }
 }

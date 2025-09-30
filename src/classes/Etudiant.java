@@ -2,10 +2,11 @@ package classes;
 import exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class Etudiant {
+public class Etudiant implements Comparable<Etudiant> {
     Identite identite;
     Formation formation;
     HashMap<Matiere, ArrayList<Double>> resultat;
@@ -77,6 +78,10 @@ public class Etudiant {
         return sommeNotes / sommeCoef;
     }
 
+    public int compareTo(Etudiant autre) {
+        // Exemple : trier par nom alphabétique
+        return this.identite.getNom().compareTo(autre.identite.getNom());
+    }
 
 
 }
