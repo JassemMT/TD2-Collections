@@ -56,38 +56,7 @@ public class GroupeTest {
         etu3.getResultat().put(web, new java.util.ArrayList<>());
         etu3.getResultat().put(reseau, new java.util.ArrayList<>());
         etu3.getResultat().put(algo, new java.util.ArrayList<>());
-    }
 
-    @Test
-    void testAjouterEtudiantBonneFormation() {
-        groupe.ajouterEtudiant(etu1);
-        assertEquals(1, groupe.getEtudiants().size());
-    }
-
-    @Test
-    void testAjouterEtudiantMauvaiseFormation() {
-        Formation autreFormation = new Formation("INFO2");
-        Etudiant etuMauvais = new Etudiant(new Identite("3","Martin", "Claire"), autreFormation);
-
-        groupe.ajouterEtudiant(etuMauvais);
-        assertEquals(0, groupe.getEtudiants().size(),
-                "L'étudiant d'une autre formation ne doit pas être ajouté");
-    }
-
-    @Test
-    void testSupprimerEtudiant() {
-        groupe.ajouterEtudiant(etu1);
-        groupe.supprimerEtudiant(etu1);
-        assertTrue(groupe.getEtudiants().isEmpty());
-    }
-
-    @Test
-    void testMoyenneMatiereSansEtudiant() throws MatiereInexistanteException {
-        assertEquals(0.0, groupe.moyenneMatiere(web));
-    }
-
-    @Test
-    void testMoyenneMatiereAvecNotes() throws Exception {
         etu1.ajouterNote(web, 12.0);
         etu1.ajouterNote(web, 10.0);
         etu1.ajouterNote(web, 11.0);
@@ -122,6 +91,39 @@ public class GroupeTest {
         etu3.ajouterNote(algo, 9.0);
         etu3.ajouterNote(algo, 8.0);
         etu3.ajouterNote(algo, 10.0);
+
+    }
+
+    @Test
+    void testAjouterEtudiantBonneFormation() {
+        groupe.ajouterEtudiant(etu1);
+        assertEquals(1, groupe.getEtudiants().size());
+    }
+
+    @Test
+    void testAjouterEtudiantMauvaiseFormation() {
+        Formation autreFormation = new Formation("INFO2");
+        Etudiant etuMauvais = new Etudiant(new Identite("3","Martin", "Claire"), autreFormation);
+
+        groupe.ajouterEtudiant(etuMauvais);
+        assertEquals(0, groupe.getEtudiants().size(),
+                "L'étudiant d'une autre formation ne doit pas être ajouté");
+    }
+
+    @Test
+    void testSupprimerEtudiant() {
+        groupe.ajouterEtudiant(etu1);
+        groupe.supprimerEtudiant(etu1);
+        assertTrue(groupe.getEtudiants().isEmpty());
+    }
+
+    @Test
+    void testMoyenneMatiereSansEtudiant() throws MatiereInexistanteException {
+        assertEquals(0.0, groupe.moyenneMatiere(web));
+    }
+
+    @Test
+    void testMoyenneMatiereAvecNotes() throws Exception {
 
         groupe.ajouterEtudiant(etu1);
         groupe.ajouterEtudiant(etu2);
@@ -277,7 +279,7 @@ public class GroupeTest {
         assertEquals(moyenneAttendue, groupe.moyenneGenerale(), 0.01);
     }
 
-/*
+
     @Test
     public void testListeVide() {
         List<Etudiant> result = groupe.triMerite();
@@ -287,13 +289,12 @@ public class GroupeTest {
 
     @Test
     public void testUnSeulEtudiant() {
-        etu1 = new Etudiant(new Identite("1","Dupont", "Arthur"), formation);
         groupe.ajouterEtudiant(etu1);
 
         List<Etudiant> result = groupe.triMerite();
         assertEquals(1, result.size(), "Doit contenir un seul étudiant");
         assertEquals(etu1, result.get(0), "L'étudiant doit être le même");
-        // Vérifie que le message est affiché (nécessite capture de sortie)
+        // Vérifie que le message est affiché
     }
 
     @Test
@@ -303,9 +304,9 @@ public class GroupeTest {
         groupe.ajouterEtudiant(etu3);
         List<Etudiant> result = groupe.triMerite();
 
-        etu1 = new Etudiant(new Identite("1","Dupont", "Arthur"), formation);
-        etu2 = new Etudiant(new Identite("2", "Durand", "Astrid"), formation);
-        etu3 = new Etudiant(new Identite("3","Donald", "David"), formation);
+        //etu1 = new Etudiant(new Identite("1","Dupont", "Arthur"), formation);
+        //etu2 = new Etudiant(new Identite("2", "Durand", "Astrid"), formation);
+        //etu3 = new Etudiant(new Identite("3","Donald", "David"), formation);
         assertEquals(3, result.size(), "Doit contenir les 3 étudiants");
         assertEquals("Arthur Dupont (Moyenne : 12.0)", result.get(0).toString(), "Premier doit être Arthur");
         assertEquals("Astrid Durand (Moyenne : 10.0)", result.get(1).toString(), "Deuxième doit être Astrid");
@@ -335,5 +336,4 @@ public class GroupeTest {
 
     }
 
- */
 }

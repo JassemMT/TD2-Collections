@@ -65,4 +65,25 @@ public class Groupe {
     public void triAntiAlpha() {
         Collections.sort(etudiants, new ComparateurAntiAlpha());
     }
+
+    public List<Etudiant> triMerite() {
+        List<Etudiant> listeTrie = new ArrayList<>(etudiants); // Copie de la liste
+
+        if (etudiants.isEmpty()) {
+            System.out.println("Aucun etudiant");
+            return listeTrie;
+        }
+
+        if (etudiants.size() == 1) {
+            System.out.println("un seul étudiant dans le groupe : " + listeTrie);
+            return listeTrie;
+        }
+
+        try {
+            listeTrie.sort(new ComparateurMerite()); // Trie avec le Comparator personnalisé
+        } catch (Exception e) {
+            System.out.println("Erreur lors du tri : " + e.getMessage());
+        }
+        return listeTrie; // Retourne la liste triée par moyenne décroissante
+    }
 }
