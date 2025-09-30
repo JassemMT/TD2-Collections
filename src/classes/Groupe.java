@@ -2,6 +2,7 @@ package classes;
 import exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Groupe {
@@ -54,6 +55,7 @@ public class Groupe {
         }
         return (etudiants.isEmpty()) ? 0 : total / etudiants.size();
     }
+
     /** Tri alphabétique A vers Z */
     public void triAlpha() {
         Collections.sort(etudiants, new ComparateurAlpha());
